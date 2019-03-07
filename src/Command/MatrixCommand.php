@@ -135,15 +135,11 @@ class MatrixCommand extends Command
     private function rotateRows(array $oldRows): array
     {
         $rows = [];
-        $rowsAmount = \count($oldRows);
-        $tdAmount = \count($oldRows[0]);
-        for ($i = 0; $i < $rowsAmount; $i++) {
-            $row = [];
-            for ($j = $tdAmount - 1; $j >= 0; $j--) {
-                $row[] = $oldRows[$j][$i];
-            }
+        $oldRows = array_values( $oldRows );
 
-            $rows[] = $row;
+        // make each new row = reversed old column
+        foreach( array_keys( $oldRows[0] ) as $column ){
+            $rows[] = array_reverse( array_column( $oldRows, $column ) );
         }
 
         return $rows;
